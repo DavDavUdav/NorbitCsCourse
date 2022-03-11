@@ -10,6 +10,9 @@ namespace ConsoleApp1
             ReadUser();
         }
 
+        /// <summary>
+        /// Выводит возвращенные значения методов библиотеки ClassLibraryWrite.
+        /// </summary>
         public static void ReadUser()
         {
             Console.WriteLine("Введите целое положительное число");
