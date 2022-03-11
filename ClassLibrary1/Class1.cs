@@ -10,12 +10,10 @@ namespace ClassLibraryWrite
         /// <param name="n"></param>
         public static char[,] WriteStars(int n)
         {
-
             int result = (int)((n + 1) / 2);
             char[,] starsSquade = new char[n, n];
             for (int i = 1; i <= n; i++)
             {
-
                 if (i == result)
                 {
                     for (int j = 1; j < result; j++)
@@ -35,7 +33,6 @@ namespace ClassLibraryWrite
                         starsSquade[i - 1, j - 1] = '*';
                     }
                 }
-
             }
             return starsSquade;
         }
@@ -53,6 +50,5 @@ namespace ClassLibraryWrite
             }
             return numbersArr;
         }
-
     }
 }
