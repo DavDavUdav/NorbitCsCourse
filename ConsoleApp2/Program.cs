@@ -35,6 +35,7 @@ namespace ConsoleApp2
             Console.WriteLine("Работа модуля закончена, нажмите любую кнопку для продолжения");
         }
 
+
         public static void WriteAverageWords()
         {     
             Console.WriteLine("Среднее значение длинны слов - "+ClassBmiWeight.AverageWord(Console.ReadLine()));
