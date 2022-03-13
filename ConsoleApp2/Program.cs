@@ -7,8 +7,8 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-            ConsoleWriteBmi();
-            ConsoleWriteArray();
+            //ConsoleWriteBmi();
+            //ConsoleWriteArray();
             WriteAverageWords();
         }
 

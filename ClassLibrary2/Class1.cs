@@ -50,14 +50,21 @@ namespace ClassLibraryBmiWeight
         /// <returns></returns>
         public static double AverageWord(string str)
         {
-            char[] arrayChar = { '-', '.', '?', '!', ')', '(', ',', ':','\"',';','\'','@' };
-            double averageValue = 0;
-            for (int i=0;i<arrayChar.Length;i++)
+            char[] arrayCharString = str.ToCharArray();
+            for (int i=0; i<arrayCharString.Length;i++)
             {
-                str = str.Replace(arrayChar[i],' ');                
+                char a = arrayCharString[i];
+                if (char.IsSeparator(a) || char.IsPunctuation(a))
+                {
+                    arrayCharString[i] = ' ';
+                }               
             }
-            str = string.Join(" ", str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-            string[] arrayString = str.Split(" ");
+            string resultString = new string(arrayCharString);
+            Console.WriteLine(resultString);
+            double averageValue = 0;
+            resultString = string.Join(" ", resultString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+            Console.WriteLine(resultString);
+            string[] arrayString = resultString.Split(" ");
             for (int i=0;i<arrayString.Length;i++)
             {
                 averageValue += arrayString[i].Length;
