@@ -4,11 +4,11 @@ namespace ClassLibraryBmiWeight
 {
     public class ClassBmiWeight
     {
-        public static double Bmi()
+        public static double BmiCount(double weight, double height)
         {
-            int b = 1;
-
-            return b;
+            return  Math.Round(weight / Math.Pow(height, 2), 1) ;
         }
+
+        
     }
 }
