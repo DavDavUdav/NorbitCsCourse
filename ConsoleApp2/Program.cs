@@ -8,6 +8,7 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
             ConsoleWriteBmi();
+            ConsoleWriteArray();
         }
 
         public static void ConsoleWriteBmi()
@@ -21,5 +22,15 @@ namespace ConsoleApp2
             Console.ReadKey();
         }
 
+        public static void ConsoleWriteArray()
+        {
+            int[] arr = ClassBmiWeight.ArrayCount();
+            for (int i=0;i<arr.Length;i++)
+            {
+                Console.Write(arr[i] + ", ");
+            }
+            Console.WriteLine("Минимальный элемент массива - " + arr[0]);
+            Console.WriteLine("Максимальный элемент массива - " + arr[arr.Length-1]);
+        }
     }
 }
