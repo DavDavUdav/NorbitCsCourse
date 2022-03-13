@@ -43,6 +43,26 @@ namespace ClassLibraryBmiWeight
             return array;
         }
 
-        
+        /// <summary>
+        /// Получает строку от пользователя, убирает лишние символы и возвращает среднее значение длины слов в строке.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static double AverageWord(string str)
+        {
+            char[] arrayChar = { '-', '.', '?', '!', ')', '(', ',', ':','\"',';','\'','@' };
+            double averageValue = 0;
+            for (int i=0;i<arrayChar.Length;i++)
+            {
+                str = str.Replace(arrayChar[i],' ');                
+            }
+            str = string.Join(" ", str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+            string[] arrayString = str.Split(" ");
+            for (int i=0;i<arrayString.Length;i++)
+            {
+                averageValue += arrayString[i].Length;
+            }           
+            return averageValue / arrayString.Length;
+        }
     }
 }

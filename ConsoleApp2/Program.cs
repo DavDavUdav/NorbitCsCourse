@@ -9,6 +9,7 @@ namespace ConsoleApp2
         {
             ConsoleWriteBmi();
             ConsoleWriteArray();
+            WriteAverageWords();
         }
 
         public static void ConsoleWriteBmi()
@@ -19,6 +20,7 @@ namespace ConsoleApp2
             double userHeight = Convert.ToDouble(Console.ReadLine());
 
             Console.WriteLine( ClassBmiWeight.BmiCount(userWeight,userHeight) );
+            Console.WriteLine("Работа модуля закончена, нажмите любую кнопку для продолжения");
             Console.ReadKey();
         }
 
@@ -31,6 +33,12 @@ namespace ConsoleApp2
             }
             Console.WriteLine("Минимальный элемент массива - " + arr[0]);
             Console.WriteLine("Максимальный элемент массива - " + arr[arr.Length-1]);
+            Console.WriteLine("Работа модуля закончена, нажмите любую кнопку для продолжения");
+        }
+
+        public static void WriteAverageWords()
+        {     
+            Console.WriteLine("Среднее значение длинны слов - "+ClassBmiWeight.AverageWord(Console.ReadLine()));
         }
     }
 }
