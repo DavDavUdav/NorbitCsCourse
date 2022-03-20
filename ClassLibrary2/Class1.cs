@@ -60,10 +60,10 @@ namespace ClassLibraryBmiWeight
                 }               
             }
             string resultString = new string(arrayCharString);
-            Console.WriteLine(resultString);
+            
             double averageValue = 0;
             resultString = string.Join(" ", resultString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-            Console.WriteLine(resultString);
+            
             string[] arrayString = resultString.Split(" ");
             for (int i=0;i<arrayString.Length;i++)
             {
@@ -71,5 +71,8 @@ namespace ClassLibraryBmiWeight
             }           
             return averageValue / arrayString.Length;
         }
+
+        
+
     }
 }

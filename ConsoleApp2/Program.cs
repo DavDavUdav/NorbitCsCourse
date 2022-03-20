@@ -39,5 +39,22 @@ namespace ConsoleApp2
         {     
             Console.WriteLine("Среднее значение длинны слов - "+ClassBmiWeight.AverageWord(Console.ReadLine()));
         }
+
+        public static void TestStructLearning()
+        {
+            Persone persone;
+            persone.name = "Степан";
+            persone.age = 18;
+            persone.Print();
+        }
+
+        struct Persone
+        {
+            public string name;
+            public int age;
+
+            public void Print() =>Console.WriteLine($"Имя:{name}, возраст: {age}");
+            
+        }
     }
 }
