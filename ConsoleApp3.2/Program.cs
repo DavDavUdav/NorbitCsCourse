@@ -13,45 +13,66 @@ namespace ConsoleApp3._2
 
             var test = new List<string> { "11","23","21","229"};
 
+            var test1 = new List<string> { "111", "233", "21", "229","233", "21", };
+
             var dynamicArray = new DynamicArray<string>();
 
-            var array = new string[8];
-            array[0] = "1";
-            array[1] = "11";
-            array[2] = "12";
-            array[3] = "13";
-            array[4] = "13";
-            array[5] = "13";
-            array[6] = "13";
-            array[7] = "14";
-
-            dynamicArray.AddRange(test, array);
-            /*
-            string[] a = dynamicArray.CreateArray(test);
-
-            for (int i=0;i<a.Count();i++)
-            {
-                Console.WriteLine(a[i]);
-            }
-            
-            var array = new string[8];
-            array[0] = "1";
-            array[1] = "11";
-            array[2] = "12";
-            array[3] = "13";
-            array[4] = "13";
-            array[5] = "13";
-            array[6] = "13";
-            array[7] = "13";
             
 
-            var myArray = dynamicArray.Add(array);
-
-            for(int i=0;i<myArray.Count();i++)
+            dynamicArray.CreateArray(test);
+            Console.WriteLine(dynamicArray.Capacity);
+            for (int i=0;i<dynamicArray.Capacity;i++)
             {
-                Console.WriteLine(myArray[i]+" = "+i);
+                Console.WriteLine(dynamicArray.GetElement(i));
             }
-            */
+
+            dynamicArray.AddRange(test1);
+            Console.WriteLine("Вывод нового массива :");
+            for (int i = 0; i < dynamicArray.Capacity; i++)
+            {
+                Console.WriteLine(dynamicArray.GetElement(i));
+            }
+
+            dynamicArray.Insert("a2",30);
+            Console.WriteLine("Insert. Вывод нового массива :");
+            for (int i = 0; i < dynamicArray.Capacity; i++)
+            {
+                Console.WriteLine(i+") "+dynamicArray.GetElement(i));
+            }
+            Console.ReadKey();
+        }
+
+        public static void CreateTest()
+        {
+
+        }
+
+        public static void AddTest()
+        {
+
+        }
+
+        public static void AddRangeTest()
+        {
+            var test = new List<string> { "11", "23", "21", "229" };
+
+            var dynamicArray = new DynamicArray<string>();
+
+
+        }
+
+        public static void RemoveTest()
+        {
+            var dynamicArray = new DynamicArray<string>();
+
+            dynamicArray.Remove("21");
+            Console.WriteLine("Вывод нового массива :");
+
+            for (int i = 0; i < dynamicArray.Capacity; i++)
+            {
+                Console.WriteLine(dynamicArray.GetElement(i));
+            }
+            Console.WriteLine("емкость массива: " + dynamicArray.Capacity);
         }
 
         

@@ -5,110 +5,184 @@ using System.Linq;
 
 namespace DynamicArray
 {
-    public class DynamicArray<T>
+    public class DynamicArray<T> : IEnumerable<T>
     {
-        object[] array;
-        private T[] arrayT;
-
-        int sum;
-
-
-
+        T[] arrayT;
+        int count = 0;
 
         /// <summary>
         ///  Создает массив на 8 элементов.
         /// </summary>
         public void CreateArray()
         {
-            array = new ArrayList[8];
-            
+            arrayT = new T[8];
         }
-        
+
         public void CreateArray(int num)
         {
-            array = new Array[num];
+            arrayT = new T[num];
         }
 
-        public T[] CreateArray(IEnumerable<T> arr)
+        public void CreateArray(IEnumerable<T> col)
         {
-            int sum = arr.Count();
-
-            arrayT = arr.ToArray();
-            return arrayT;
-        }
-
-        public int[] Add(int[] arr)
-        {
-            sum = 0;
-
-            for (int i = 0; i < arr.Count(); i++)
+            arrayT = new T[col.Count()];
+            for (int i = 0; i < col.Count(); i++)
             {
-                sum++;
-                Console.WriteLine(arr[i] + " " + sum);
+                arrayT[i] = col.ElementAt(i);
+                count++;
+            }
+        }
+
+        public void Add(T element)
+        {
+            if (Length == Capacity - 1)
+            {
+                var newArrayT = new T[Capacity * 2];
+                for (int i = 0; i < Capacity; i++)
+                {
+                    newArrayT[i] = arrayT[i];
+                }
+                arrayT = newArrayT;
+            }
+            arrayT[count] = element;
+            count++;
+        }
+
+        public void AddRange(IEnumerable<T> collection)
+        {
+            count = Length;
+            var newArrayT = new T[count + collection.Count()];
+            arrayT.CopyTo(newArrayT, 0);
+
+            int num = 0;
+
+            for (int i = count; i < newArrayT.Count(); i++)
+            {
+                newArrayT[i] = collection.ElementAt(num);
+                num++;
+            }
+            arrayT = newArrayT;
+            count = arrayT.Length;
+        }
+
+        public bool Remove(T element)
+        {
+            int numElements = 0;
+            for (int i = 0; i < count; i++)     // Подсчитываем количество одинаковых элементов
+            {
+                if (element.Equals(GetElement(i)))
+                {
+                    numElements++;
+                }
+            }
+
+            if (numElements != 0)
+            {
+                RemoveElement(element);     // вызываем метод удаления элемента
+                return true;
+            }
+            else return false;
+        }
+
+        public bool Insert(T element, int position)
+        {
+            try
+            {
+                if (position < Capacity)
+                {
+                    if (position > Length)
+                    {
+                        arrayT[position] = element;
+                        return true;
+                    }
+                    else
+                    {
+                        var newArrayT = new T[arrayT.Count()];
+                        for (int i = 0; i < position - 1; i++)
+                        {
+                            newArrayT[i] = arrayT[i];
+                        }
+                        newArrayT[position - 1] = element;
+                        int n = position - 1;
+                        for (int i = position; i < newArrayT.Count(); i++)
+                        {
+                            newArrayT[i] = arrayT[n];
+                            n++;
+                        }
+
+                        return true;
+                    }
+                } else
+                {
+                    var newArrayT = new T[position];
+                    arrayT.CopyTo(newArrayT, 0);
+                    newArrayT[position - 1] = element;
+
+                    arrayT = newArrayT;
+                    return true;
+                }
 
 
             }
-            return arr;
-            
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new Exception(ex.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public string[] Add(string[] arr)
+        public IEnumerator<T> GetEnumerator()
         {
-            sum = 0;
-            int count = arr.Count();
+            for (int i=0;i<Length;i++)
+            {
+                yield return this.GetElement(i);
+            }
+        }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        private void RemoveElement(T element)
+        {
             for (int i = 0; i < count; i++)
             {
-                
-                if (arr[i]!=null && arr[i]!=" ")
+                if (element.Equals(GetElement(i)))
                 {
-                    sum++;
-                }
-            }
+                    var list = arrayT.ToList();
+                    arrayT = new T[Capacity];
 
-            if (sum<arr.Count())
-            {
-                arr[sum] = "Hello";
-                return arr;
-            }
-            else
-            {
-                var newArray = new string[count * 2];
-                for (int i=0;i<count;i++)
-                {
-                    newArray[i] = arr[i];
+                    list.CopyTo(0, arrayT, 0, i);
+                    list.CopyTo(i + 1, arrayT, i + 1, count - i - 1);
                 }
-                newArray[count] = "Hello";
-                return newArray;
-            }   
+            }
         }
 
-        /// <summary>
-        /// Добавляет коллекцию в конец массива.
-        /// </summary>
-        /// <param name="col"> Коллекция. </param>
-        /// <returns></returns>
-        public T[] AddRange(IEnumerable<T> col, T[] array )
+        public T this[int index]
         {
-            int sum1 = array.Count();   // Количество элементов массива.
-            int sum2 = col.Count();     // Количество элементов коллекции.
-            int count = 0;
+            get => arrayT[index];
+            set => arrayT[index] = value;
+        }
 
-            arrayT = new T[sum1+sum2];  // Создаем T[] нужного размера.
-            array.CopyTo(arrayT,0);     // Копируем массив в T[].
-            var testarr = col.ToArray();    // Копируем коллекцию в массив.
 
-            for (int i=sum1;i<sum1+sum2;i++)    // присваиваем значения оставшихся элементов.
-            {
-                arrayT[i] = testarr[count++];
-            }
-            
-            // Тестирование на работоспособность.
-            for(int i=0;i<arrayT.Count();i++)
-            {
-                Console.WriteLine(arrayT[i]);
-            }
-            return arrayT;
+        public int Capacity     // Емкость массива.
+        {
+            get { return arrayT.Length; }
+        }
+        
+        public int Length       // Количество заполненных элементов
+        {
+            get { return count; }
+        }
+        
+        public T GetElement(int index)      // Получаем элемент массива
+        {
+            return arrayT[index];
         }
     }
 }
