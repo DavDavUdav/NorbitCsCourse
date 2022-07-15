@@ -23,7 +23,7 @@ namespace DynamicArray
         public DynamicArray()
             : this(defaultCapacity)
         {
-            
+
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace DynamicArray
             var a = count + collection.Count();
             var newArrayT = new T[1];
 
-            if (a<=array.Length)
+            if (a <= array.Length)
             {
                 newArrayT = new T[array.Length];
             }
@@ -85,7 +85,7 @@ namespace DynamicArray
             {
                 newArrayT = new T[count + collection.Count()];
             }
-            
+
             array.CopyTo(newArrayT, 0);
 
             int num = 0;
@@ -110,7 +110,7 @@ namespace DynamicArray
             {
                 throw new ArgumentNullException("Элемент должен быть не пустым!");
             }
-            
+
             int numElements = 0;
             for (int i = 0; i < count; i++)     // Подсчитываем количество одинаковых элементов
             {
@@ -141,18 +141,18 @@ namespace DynamicArray
                 throw new ArgumentNullException("Элемент пустой!");
             }
 
-            if (position>Capacity)  // Валидация.
+            if (position > Capacity)  // Валидация.
             {
                 throw new ArgumentOutOfRangeException("Позиция за пределами массива!");
             }
 
-            if (position>Length)
+            if (position > Length)
             {
                 array[position] = element;
                 return true;
             }
 
-            if (position <= Length )
+            if (position <= Length)
             {
                 if (Length < Capacity)
                 {
@@ -191,7 +191,7 @@ namespace DynamicArray
             }
             array = newArrayT;
         }
-        
+
         /// <summary>
         ///  Доп метод для удаления элементов массива.
         /// </summary>
@@ -213,7 +213,7 @@ namespace DynamicArray
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i=0;i<Length;i++)
+            for (int i = 0; i < Length; i++)
             {
                 yield return this.array[i];
             }
@@ -229,14 +229,26 @@ namespace DynamicArray
         #region Parameters
 
         /// <summary>
-        /// Обращение к элементу массива.
+        /// Индексатор. Обращение к элементу массива.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
         public T this[int index]
         {
-            get => array[index];
-            set => array[index] = value;
+            get {
+                if (index>=0 && index<Capacity)
+                {
+                    return array[index];
+                }
+                else throw new ArgumentOutOfRangeException(); // иначе генерируем исключение
+            }
+            set
+            {
+                if (index >= 0 && index < Capacity)
+                {
+                     array[index]=value;
+                }
+            }
         }
 
         /// <summary>
