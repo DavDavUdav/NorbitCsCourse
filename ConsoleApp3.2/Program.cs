@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DynamicArray;
 
-namespace ConsoleApp3._2
+namespace ConsoleApp3_2
 {
     class Program
     {
@@ -19,21 +19,21 @@ namespace ConsoleApp3._2
 
             
 
-            dynamicArray.CreateArray(test);
+            
             Console.WriteLine(dynamicArray.Capacity);
             for (int i=0;i<dynamicArray.Capacity;i++)
             {
-                Console.WriteLine(dynamicArray.GetElement(i));
+                Console.WriteLine(i + ") " + dynamicArray.GetElement(i));
             }
 
             dynamicArray.AddRange(test1);
             Console.WriteLine("Вывод нового массива :");
             for (int i = 0; i < dynamicArray.Capacity; i++)
             {
-                Console.WriteLine(dynamicArray.GetElement(i));
+                Console.WriteLine(i + ") " + dynamicArray.GetElement(i));
             }
 
-            dynamicArray.Insert("a2",30);
+            dynamicArray.Insert("a2",8);
             Console.WriteLine("Insert. Вывод нового массива :");
             for (int i = 0; i < dynamicArray.Capacity; i++)
             {
