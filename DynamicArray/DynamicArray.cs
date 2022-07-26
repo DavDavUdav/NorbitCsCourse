@@ -14,7 +14,51 @@ namespace DynamicArray
         T[] array;
         int count = 0;
         public const int defaultCapacity = 8;
+        
+        #region Свойства
 
+        /// <summary>
+        /// Индексатор. Обращение к элементу массива.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public T this[int index]
+        {
+            get {
+                if (index<0 && index>=Capacity)
+                {
+                    throw new ArgumentOutOfRangeException(); // иначе генерируем исключение
+                }
+                else return array[index];
+            }
+            set
+            {
+                if (index < 0 && index >= Capacity)
+                {
+                    throw new ArgumentOutOfRangeException(); // иначе генерируем исключение
+                }
+                else array[index]=value;
+            }
+        }
+
+        /// <summary>
+        /// Емкость массива.
+        /// </summary>
+        public int Capacity    
+        {
+            get { return array.Length; }
+        }
+        
+        /// <summary>
+        /// Количество заполненных элементов.
+        /// </summary>
+        public int Length       
+        {
+            get { return count; }
+        }
+     
+        #endregion Свойства
+        
         #region Конструкторы
 
         /// <summary>
@@ -72,12 +116,11 @@ namespace DynamicArray
             {
                 throw new ArgumentNullException("Пустая коллекция!");
             }
-            count = Length;
 
             var a = count + collection.Count();
             var newArrayT = new T[1];
 
-            if (a <= array.Length)
+            if (a <= Capacity)
             {
                 newArrayT = new T[array.Length];
             }
@@ -90,13 +133,14 @@ namespace DynamicArray
 
             int num = 0;
 
-            for (int i = count; i < collection.Count(); i++)
+            for (int i = count; i < a; i++)
             {
                 newArrayT[i] = collection.ElementAt(num);
                 num++;
+                count++;
             }
             array = newArrayT;
-            count = array.Length;
+            
         }
 
         /// <summary>
@@ -112,9 +156,9 @@ namespace DynamicArray
             }
 
             int numElements = 0;
-            for (int i = 0; i < count; i++)     // Подсчитываем количество одинаковых элементов
+            for (int i = 0; i < Capacity; i++)     // Подсчитываем количество одинаковых элементов
             {
-                if (element.Equals(GetElement(i)))
+                if (element.Equals(this[i]))
                 {
                     numElements++;
                 }
@@ -148,21 +192,19 @@ namespace DynamicArray
 
             if (position > Length)
             {
-                array[position] = element;
+                array[position-1] = element;
+                count++;
                 return true;
             }
 
             if (position <= Length)
             {
-                if (Length < Capacity)
+                if (Length <= Capacity)
                 {
-                    InsertIn(element, position, array.Count());
-                    return true;
-                }
-
-                if (Length == Capacity)
-                {
-                    InsertIn(element, position, array.Count() + 1);
+                    InsertIn(element, position, Length<Capacity
+                        ? array.Count()
+                        : array.Count() + 1);
+                    count++;
                     return true;
                 }
             }
@@ -198,15 +240,16 @@ namespace DynamicArray
         /// <param name="element"></param>
         private void RemoveElement(T element)
         {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < Capacity; i++)
             {
-                if (element.Equals(GetElement(i)))
+                if (element.Equals(array[i]))
                 {
                     var list = array.ToList();
                     array = new T[Capacity];
 
                     list.CopyTo(0, array, 0, i);
-                    list.CopyTo(i + 1, array, i + 1, count - i - 1);
+                    list.CopyTo(i + 1, array, i + 1, Capacity - i - 1);
+                    count--;
                 }
             }
         }
@@ -226,57 +269,6 @@ namespace DynamicArray
 
         #endregion Методы
 
-        #region Parameters
-
-        /// <summary>
-        /// Индексатор. Обращение к элементу массива.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public T this[int index]
-        {
-            get {
-                if (index>=0 && index<Capacity)
-                {
-                    return array[index];
-                }
-                else throw new ArgumentOutOfRangeException(); // иначе генерируем исключение
-            }
-            set
-            {
-                if (index >= 0 && index < Capacity)
-                {
-                     array[index]=value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Емкость массива.
-        /// </summary>
-        public int Capacity    
-        {
-            get { return array.Length; }
-        }
         
-        /// <summary>
-        /// Количество заполненных элементов.
-        /// </summary>
-        public int Length       
-        {
-            get { return count; }
-        }
-        
-        /// <summary>
-        /// получить  элемент массива.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public T GetElement(int index)  
-        {
-            return array[index];
-        }
-
-        #endregion Parameters
     }
 }
